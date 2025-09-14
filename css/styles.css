@@ -1,0 +1,195 @@
+:root {
+  /* Paleta “tech/industrial” no-pastel */
+  --bg-950:#0b0d10;
+  --bg-900:#0f1115;
+  --bg-850:#141820;
+  --bg-800:#171a21;
+  --surface:#10141b;
+  --line-600:#2a2f3a;
+  --text-100:#e8eaf0;
+  --text-300:#b7bdc9;
+  --accent:#00d27a;
+  --accent-contrast:#0b1f16;
+  --danger:#ff4d4f;
+  --good:#2ecc71;
+  --shadow: 0 10px 30px rgba(0,0,0,.35), 0 2px 10px rgba(0,0,0,.25);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body{
+  background: radial-gradient(1200px 800px at 10% -20%, rgba(0,210,122,0.08), transparent 70%),
+              radial-gradient(900px 600px at 110% 10%, rgba(0,180,255,0.10), transparent 70%),
+              linear-gradient(180deg, var(--bg-950), var(--bg-900));
+  color: var(--text-100);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.45;
+}
+
+/* Evitar que el fondo se vuelva blanco al enfocar inputs/textarea */
+.form-control:focus,
+.form-select:focus {
+  background: var(--surface);       /* mantiene tu color oscuro */
+  color: var(--text-100);           /* mantiene texto claro */
+  border-color: var(--accent);      /* resalta con tu acento */
+  box-shadow: 0 0 0 3px rgba(0, 210, 122, 0.3); /* glow verde suave */
+}
+
+
+/* Header */
+.app-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 28px 16px 12px;
+}
+.brand{display:flex; align-items:center; gap:14px}
+.brand i{font-size:28px; color:var(--accent)}
+.brand h1{font-size:20px; font-weight:800; letter-spacing:.3px; margin:0}
+.brand .thin{font-weight:600; color:var(--text-300)}
+.meta{display:flex; gap:8px; flex-wrap:wrap}
+.chip{
+  border:1px solid var(--line-600);
+  padding:6px 10px; border-radius:999px; font-size:12px; color:var(--text-300);
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.15));
+}
+
+/* Layout */
+.app-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  padding: 10px 16px 40px;
+}
+@media (min-width: 992px){
+  .app-grid{ grid-template-columns: 1.25fr .85fr; }
+}
+.left-col, .right-col{ display:flex; flex-direction:column; gap:22px; }
+
+/* Module (card mejorada) */
+.module{
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.14));
+  border: 1px solid var(--line-600);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: clip;
+}
+.module__header{
+  padding: 18px 18px 6px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0));
+}
+.module__title{ display:flex; align-items:center; gap:10px }
+.module__title h2{ font-size:16px; font-weight:800; margin:0 }
+.module__subtitle{ margin: 2px 0 0; color: var(--text-300); font-size: 13px; }
+.module__body{ padding: 16px 18px 20px; }
+.module__row{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.sticky{ position: sticky; top: 20px; }
+
+/* Decor */
+.dot{
+  width:10px; height:10px; border-radius:50%;
+  background: linear-gradient(180deg, rgba(255,255,255,.25), rgba(0,0,0,.6));
+  border:1px solid rgba(255,255,255,.2);
+  box-shadow: 0 0 0 3px rgba(255,255,255,.02);
+}
+.dot--accent{ background: var(--accent); border-color: rgba(0,210,122,.6); }
+
+.divider{
+  height:1px; width:100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  margin: 16px 0;
+}
+
+/* Forms */
+.form-control, .form-select{
+  background: var(--surface);
+  color: var(--text-100);
+  border: 1px solid var(--line-600);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.form-control--elev{ box-shadow: inset 0 0 0 1px rgba(255,255,255,.02); }
+.form-control--readonly{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.18)),
+    var(--surface);
+  resize: vertical;
+}
+.form-control::placeholder { color: var(--text-300); }
+.input-icon{ position:relative; }
+.input-icon i{
+  position:absolute; left:12px; top:50%; transform: translateY(-50%);
+  color: var(--text-300); font-size: 16px;
+}
+.input-icon input{ padding-left: 36px; }
+
+/* Buttons */
+.btn-accent{
+  background: linear-gradient(180deg, var(--accent), #00b66a);
+  color:#001b10; border:0; font-weight:800;
+  border-radius: 12px; padding: 10px 16px;
+  transition: transform .06s ease, filter .2s ease;
+}
+.btn-accent:hover{ filter: brightness(.95); transform: translateY(-1px); }
+.btn-good{
+  background: linear-gradient(180deg, var(--good), #1ea95a);
+  color: #001b10; border:0; font-weight:800; border-radius: 12px; padding: 10px 14px;
+}
+.btn-bad{
+  background: linear-gradient(180deg, #ff6b6d, var(--danger));
+  color: #3a0000; border:0; font-weight:800; border-radius: 12px; padding: 10px 14px;
+}
+
+/* Lists (glosario) */
+.list{ list-style:none; padding-left:0; margin:0; }
+.list--cards{ display:flex; flex-direction:column; gap:10px; }
+.list--cards li{
+  display:flex; justify-content:space-between; align-items:start; gap:10px;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12));
+  border:1px solid var(--line-600);
+  border-radius:12px; padding:12px 14px;
+}
+.list--cards li .title{ font-weight:700; }
+.list--cards li .meta{ color: var(--text-300); font-size: 12px; }
+.list--cards li .use-btn{
+  border:1px solid var(--line-600);
+  background: rgba(255,255,255,.03);
+  color: var(--text-100);
+  border-radius:10px; padding:6px 10px; font-weight:700;
+}
+.list--cards li .use-btn:hover{ background: rgba(255,255,255,.06); }
+
+/* Actions row */
+.actions{ display:flex; align-items:center; gap:10px; margin-top: 10px; }
+
+/* Footer */
+.app-footer{ padding: 14px 16px 40px; color: var(--text-300); text-align:center; border-top:1px solid rgba(255,255,255,.04) }
+
+/* Que la caja de respuesta NO reciba clics ni foco */
+.no-click {
+  pointer-events: none;     /* ignora clicks */
+  cursor: default;          /* cursor normal, no de texto */
+}
+
+/* Barra de acciones encima de la respuesta (copiar) */
+.response-toolbar {
+  display: none;            /* oculta por defecto; se muestra con JS cuando hay respuesta */
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+
+/* Botón "fantasma" para copiar */
+.btn-ghost {
+  border: 1px solid var(--line-600);
+  background: rgba(255,255,255,.03);
+  color: var(--text-100);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+.btn-ghost:hover { background: rgba(255,255,255,.06); }
+
+/* Mensajito de copiado */
+.copy-ok { color: var(--text-300); font-size: 12px; }
+.copy-bad { color: var(--danger); font-size: 12px; }

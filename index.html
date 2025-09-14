@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Chatbot · Interfaz de Usuario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap 5 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body class="theme-tech">
+  <header class="app-header container-xxl">
+    <div class="brand">
+      <i class="bi bi-robot"></i>
+      <h1>Chatbot<span class="thin"> · UI</span></h1>
+    </div>
+  
+  </header>
+
+  <main class="container-xxl app-grid">
+    <div class="left-col">
+      <!-- Módulo: Consulta -->
+      <section class="module">
+        <div class="module__header">
+          <div class="module__title">
+            <span class="dot dot--accent"></span>
+            <h2>Consulta</h2>
+          </div>
+          <p class="module__subtitle">Escribe tu pregunta y obtén la respuesta al instante.</p>
+        </div>
+        <div class="module__body">
+          <label class="form-label fw-semibold" for="userQuestion">Pregunta</label>
+          <textarea id="userQuestion" class="form-control form-control--elev" rows="3" placeholder="Ej.: ¿Cuál es el horario de carga en bodega?"></textarea>
+
+          <div class="actions">
+            <button id="sendBtn" class="btn btn-accent btn-lg">
+              <i class="bi bi-send"></i> Enviar
+            </button>
+            <span id="loading" class="loading small text-muted d-none">Buscando…</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <label class="form-label fw-semibold" for="systemAnswer">Respuesta</label>
+          <textarea id="systemAnswer" class="form-control form-control--readonly" rows="3" readonly placeholder="Aquí verás la respuesta…"></textarea>
+        </div>
+      </section>
+
+      <!-- Módulo: Feedback -->
+      <section id="feedbackSection" class="module d-none">
+        <div class="module__header">
+          <div class="module__title">
+            <span class="dot"></span>
+            <h2>Feedback</h2>
+          </div>
+          <p class="module__subtitle">Ayúdanos a mejorar la calidad de las respuestas.</p>
+        </div>
+        <div class="module__body module__row">
+          <button class="btn btn-good" id="fbOk">
+            <i class="bi bi-hand-thumbs-up"></i> ✓ Respuesta Correcta
+          </button>
+          <button class="btn btn-bad" id="fbBad">
+            <i class="bi bi-hand-thumbs-down"></i> ✗ Respuesta Incorrecta
+          </button>
+          <small id="fbMsg" class="ms-2 text-muted"></small>
+        </div>
+      </section>
+    </div>
+
+    <aside class="right-col">
+      <!-- Módulo: Glosario -->
+      <section class="module sticky">
+        <div class="module__header">
+          <div class="module__title">
+            <span class="dot"></span>
+            <h2>Glosario</h2>
+          </div>
+          <p class="module__subtitle">Encuentra preguntas ya respondidas por tema o búsqueda.</p>
+        </div>
+        <div class="module__body">
+          <div class="row g-3 align-items-end">
+            <div class="col-12">
+              <label class="form-label fw-semibold">Buscar</label>
+              <div class="input-icon">
+                <i class="bi bi-search"></i>
+                <input id="searchGlossary" class="form-control form-control--elev" placeholder="Buscar pregunta específica…">
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold">Tema</label>
+              <select id="filterTema" class="form-select form-control--elev">
+                <option value="">Todos</option>
+              </select>
+            </div>
+          </div>
+
+          <ul id="glossaryList" class="list list--cards mt-3">
+          </ul>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+
+
+  <script type="module" src="./js/user.js"></script>
+</body>
+</html>
