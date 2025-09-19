@@ -1,1 +1,129 @@
-//AQUI VA LA PARTE DEL ADMIN
+<!--AQUI VA LA PARTE DEL ADMIN-->
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Chatbot · Administrador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap 5 + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body class="theme-tech">
+  <header class="app-header container-xxl">
+    <div class="brand">
+      <i class="bi bi-shield-lock"></i>
+      <h1>Chatbot<span class="thin"> · Admin</span></h1>
+    </div>
+  </header>
+
+  <main class="container-xxl app-grid">
+    <div class="left-col">
+      <!-- Preguntas sin respuesta -->
+      <section class="module">
+        <div class="module__header">
+          <div class="module__title">
+            <span class="dot dot--accent"></span>
+            <h2>Preguntas sin respuesta</h2>
+          </div>
+          <p class="module__subtitle">Lista de consultas que aún no tienen respuesta.</p>
+        </div>
+        <div class="module__body">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>Pregunta</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="pendingQuestions"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Consulta de prueba -->
+      <section class="module">
+        <div class="module__header">
+          <div class="module__title">
+            <span class="dot"></span>
+            <h2>Consulta de prueba</h2>
+          </div>
+          <p class="module__subtitle">Haz preguntas de prueba para validar el sistema.</p>
+        </div>
+        <div class="module__body">
+          <label class="form-label fw-semibold" for="testQuestion">Pregunta</label>
+          <textarea id="testQuestion" class="form-control form-control--elev" rows="3" placeholder="Ej.: ¿Cuál es el horario de carga en bodega?"></textarea>
+          
+          <div class="actions">
+            <button id="testBtn" class="btn btn-accent btn-lg">
+              <i class="bi bi-search"></i> Probar Pregunta
+            </button>
+            <span id="testLoading" class="loading small text-muted d-none">Buscando…</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <label class="form-label fw-semibold" for="testAnswer">Respuesta</label>
+          <textarea id="testAnswer" class="form-control form-control--readonly" rows="3" readonly placeholder="Aquí verás la respuesta…"></textarea>
+        </div>
+      </section>
+
+      <!-- Feedback y Corrección -->
+      <section id="correctionSection" class="module d-none">
+        <div class="module__header">
+          <div class="module__title">
+            <span class="dot"></span>
+            <h2>Feedback y Corrección</h2>
+          </div>
+          <p class="module__subtitle">Valida y corrige respuestas del sistema.</p>
+        </div>
+        <div class="module__body module__row">
+          <button class="btn btn-good" id="adminFbOk">
+            <i class="bi bi-hand-thumbs-up"></i> ✓ Correcta
+          </button>
+          <button class="btn btn-bad" id="adminFbBad">
+            <i class="bi bi-hand-thumbs-down"></i> ✗ Incorrecta
+          </button>
+          <small id="adminFbMsg" class="ms-2 text-muted"></small>
+        </div>
+        <div class="module__body mt-3">
+          <label class="form-label fw-semibold">Corrección</label>
+          <input id="correctionInput" type="text" class="form-control form-control--elev" placeholder="Escribe la respuesta correcta…">
+          <button id="saveCorrectionBtn" class="btn btn-primary mt-2">
+            <i class="bi bi-save"></i> Guardar Corrección
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Modal para responder -->
+<div id="answerModal" class="modal-ov d-none">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Responder pregunta</h3>
+      <button class="modal-close" aria-label="Cerrar">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p id="answerModalQuestion" class="mb-2 text-muted"></p>
+      <textarea id="answerModalInput" class="form-control form-control--elev" rows="3"
+        placeholder="Escribe la respuesta..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button id="answerModalOk" class="btn-accent">OK</button>
+      <button id="answerModalCancel" class="btn-ghost">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast simple -->
+<div id="toast" class="toast-ov d-none"><span id="toastMsg"></span></div>
+
+
+  <script type="module" src="./js/trainer.js"></script>
+</body>
+</html>

@@ -10,14 +10,37 @@
  * Los contratos de datos (payloads) están indicados en comentarios.
  */
 export const API = {
-  // POST { pregunta:string } -> { status:'ok', answer:string, pregunta_id:number } | { status:'not_found', message:string }
+  // === USER ===
+  // POST { pregunta:string } 
+  // -> { status:'ok', answer:string, pregunta_id:number } | { status:'not_found', message:string }
   ask: '/backend/search.php',
 
-  // POST { pregunta_id:number, es_correcta:boolean } -> { status:'ok' }
+   
+
+  // POST { pregunta_id:number, es_correcta:boolean } 
+  // -> { status:'ok' }
   feedback: '/backend/feedback.php',
 
-  // GET -> { temas:string[], items:{ id:number, pregunta:string, tema:string }[] }
+  // GET 
+  // -> { temas:string[], items:{ id:number, pregunta:string, tema:string }[] }
   glossary: '/backend/glossary.php',
+
+  // === TRAINER ===
+  // GET 
+  // -> { items:{ id:number, pregunta:string }[] }
+  pending: '/backend/pending.php',
+
+  // POST { id:number, respuesta:string, tema:string } 
+  // -> { status:'ok' }
+  answer: '/backend/answer.php',
+
+  // POST { id:number, respuesta:string } 
+  // -> { status:'ok' }
+  correct: '/backend/correct.php',
+
+   // ---- PARTE DEL LOGIN ----
+
+  login: '/auth/login',
 };
 
 /**
@@ -70,23 +93,26 @@ export async function requestJSON(url, method = 'GET', data = undefined) {
       method,
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
       body: data ? JSON.stringify(data) : undefined,
-      // Nota: si tu backend requiere credenciales/CORS, agrega:
-      // credentials: 'include',
-      // mode: 'cors',
     });
 
-    // Falla explícita si la respuesta HTTP no es 2xx (para que el caller maneje errores)
     if (!res.ok) throw new Error(`Network error (${res.status})`);
-
-    // Devuelve el cuerpo ya parseado
     return await res.json();
   }
 
   // ---- MODO MOCK: datos simulados para desarrollo sin backend ----
-  // Simula latencia de red
   await new Promise((r) => setTimeout(r, 400));
 
-  // Mock para el glosario
+  // === USER MOCKS ===
+
+  // ---- PARTE DEL LOGIN COMIENZA ----
+
+if (url.includes('/auth/login')) {
+  if (data?.username === 'admin' && data?.password === '1234') {
+    return { status: 'ok', user:{ id:1, username:'admin' } };
+  }
+  return { status:'error', message:'Usuario o contraseña inválidos' };
+}   // ---- PARTE DEL LOGIN TERMINA ----
+
   if (url.includes('glossary')) {
     return {
       temas: ['Operación', 'TI', 'Logística'],
@@ -98,29 +124,94 @@ export async function requestJSON(url, method = 'GET', data = undefined) {
     };
   }
 
-  // Mock para búsqueda de respuestas
   if (url.includes('search')) {
     const q = (data?.pregunta || '').toLowerCase();
-
-    // Ejemplo: “servidor” devuelve una respuesta de muestra
     if (q.includes('servidor')) {
       return {
         status: 'ok',
-        answer:
-          'Para reiniciar el servidor, usa el panel de administración y ejecuta un reinicio seguro.',
+        answer: 'Para reiniciar el servidor, usa el panel de administración y ejecuta un reinicio seguro.',
         pregunta_id: 101,
       };
     }
-
-    // Si no coincide, simula “no encontrado” (se esperaría guardar en preguntas_sin_respuesta en el backend real)
     return { status: 'not_found', message: 'No encontré respuesta.' };
   }
 
-  // Mock para feedback (respuesta genérica de éxito)
   if (url.includes('feedback')) {
     return { status: 'ok' };
   }
 
-  // Fallback vacío (por si llega otra ruta en modo mock)
+  // === TRAINER MOCKS ===
+  if (url.includes('pending')) {
+    return {
+      items: [
+        { id: 201, pregunta: '¿Cómo configuro la máquina EN-08?' },
+        { id: 202, pregunta: '¿Cuál es el número de soporte técnico?' },
+      ],
+    };
+  }
+
+  if (url.includes('answer')) {
+    return { status: 'ok', message: 'Respuesta guardada correctamente.' };
+  }
+
+  if (url.includes('correct')) {
+    return { status: 'ok', message: 'Respuesta corregida.' };
+  }
+
+// Fallback vacío
   return {};
+  
 }
+
+
+// ===== Modal de respuesta =====
+export function askForAnswer({ questionText = '' } = {}) {
+  const ov     = document.getElementById('answerModal');
+  const qEl    = document.getElementById('answerModalQuestion');
+  const input  = document.getElementById('answerModalInput');
+  const okBtn  = document.getElementById('answerModalOk');
+  const cancel = document.getElementById('answerModalCancel');
+  const xBtn   = ov.querySelector('.modal-close');
+
+  qEl.textContent = questionText || 'Escribe la respuesta para esta pregunta:';
+  input.value = '';
+
+  return new Promise((resolve) => {
+    const close = (val=null) => {
+      ov.classList.add('d-none');
+      okBtn.removeEventListener('click', onOk);
+      cancel.removeEventListener('click', onCancel);
+      xBtn.removeEventListener('click', onCancel);
+      document.removeEventListener('keydown', onKey);
+      resolve(val);
+    };
+    const onOk = () => close(input.value.trim() || null);
+    const onCancel = () => close(null);
+    const onKey = (e) => {
+      if (e.key === 'Escape') onCancel();
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) onOk(); // Ctrl/Cmd+Enter
+    };
+
+    okBtn.addEventListener('click', onOk);
+    cancel.addEventListener('click', onCancel);
+    xBtn.addEventListener('click', onCancel);
+    document.addEventListener('keydown', onKey);
+
+    ov.classList.remove('d-none');
+    setTimeout(() => input.focus(), 0);
+  });
+}
+
+// ===== Toast simple =====
+export function notify(msg, type='ok', ms=1800) {
+  const t = document.getElementById('toast');
+  const s = document.getElementById('toastMsg');
+  if (!t || !s) return;
+  s.textContent = msg || '';
+  t.classList.remove('d-none','ok','err');
+  t.classList.add(type === 'err' ? 'err' : 'ok');
+  let tm = setTimeout(() => {
+    t.classList.add('d-none'); clearTimeout(tm);
+  }, ms);
+}
+
