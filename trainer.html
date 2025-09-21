@@ -1,5 +1,3 @@
-<!--AQUI VA LA PARTE DEL ADMIN-->
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -102,27 +100,40 @@
   </main>
 
   <!-- Modal para responder -->
-<div id="answerModal" class="modal-ov d-none">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3>Responder pregunta</h3>
-      <button class="modal-close" aria-label="Cerrar">&times;</button>
-    </div>
-    <div class="modal-body">
-      <p id="answerModalQuestion" class="mb-2 text-muted"></p>
-      <textarea id="answerModalInput" class="form-control form-control--elev" rows="3"
-        placeholder="Escribe la respuesta..."></textarea>
-    </div>
-    <div class="modal-actions">
-      <button id="answerModalOk" class="btn-accent">OK</button>
-      <button id="answerModalCancel" class="btn-ghost">Cancelar</button>
+  <div id="answerModal" class="modal-ov d-none">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Responder pregunta</h3>
+        <button class="modal-close" aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="answerModalQuestion" class="mb-2"></p> <!-- Recapitulación de la pregunta -->
+        
+        <!-- Selección de tema -->
+        <label for="answerModalTema" class="form-label">Tema</label>
+        <select id="answerModalTema" class="form-select form-control--elev">
+          <option value="">Selecciona un tema</option>
+          <!-- Lista de temas existentes -->
+        </select>
+        
+        <!-- Opción para agregar nuevo tema -->
+        <div id="newTemaSection" class="d-none">
+          <label for="newTemaInput" class="form-label">Nuevo Tema (opcional)</label>
+          <input id="newTemaInput" type="text" class="form-control form-control--elev" placeholder="Escribe un nuevo tema...">
+        </div>
+
+        <!-- Campo de respuesta -->
+        <textarea id="answerModalInput" class="form-control form-control--elev" rows="3" placeholder="Escribe la respuesta..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button id="answerModalOk" class="btn-accent">OK</button>
+        <button id="answerModalCancel" class="btn-ghost">Cancelar</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Toast simple -->
-<div id="toast" class="toast-ov d-none"><span id="toastMsg"></span></div>
-
+  <!-- Toast simple -->
+  <div id="toast" class="toast-ov d-none"><span id="toastMsg"></span></div>
 
   <script type="module" src="./js/trainer.js"></script>
 </body>

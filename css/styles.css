@@ -273,4 +273,130 @@ body{
 .toast-ov.err{ border-color: var(--danger); }
 
 
+/* Mensaje de feedback */
+.feedback-message {
+  color: #ffffff;  /* Hacer el texto blanco */
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+  display: block;
+}
 
+/* Asegurarse de que los botones de feedback estén ocultos */
+.feedback-button {
+  display: none;
+}
+
+/* Modal oscuro */
+.modal-ov {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 9999;
+}
+.modal-ov.d-none {
+  display: none;
+}
+.modal-card {
+  width: min(620px, 92vw);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .02), rgba(0, 0, 0, .18)), var(--surface);
+  border: 1px solid var(--line-600);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, .06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(0, 0, 0, 0));
+}
+.modal-head h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+.modal-close {
+  background: transparent;
+  color: var(--text-100);
+  border: 1px solid var(--line-600);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+.modal-close:hover {
+  background: rgba(255, 255, 255, .06);
+}
+.modal-body {
+  padding: 16px;
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, .06);
+}
+
+/* Estilo para el campo de selección de tema en el modal */
+#answerModalTema {
+  background: var(--surface);
+  color: var(--text-100);
+  border: 1px solid var(--line-600);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+#answerModalTema:focus {
+  background: var(--surface);
+  color: var(--text-100);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 210, 122, 0.3); /* glow verde suave */
+}
+
+#answerModalInput {
+  background: var(--surface);
+  color: var(--text-100);
+  border: 1px solid var(--line-600);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-top: 10px;
+}
+#answerModalInput:focus {
+  background: var(--surface);
+  color: var(--text-100);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 210, 122, 0.3); /* glow verde suave */
+}
+
+/* Botones en el modal */
+.modal-actions button {
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-weight: 800;
+}
+.modal-actions button:hover {
+  filter: brightness(.95);
+  transform: translateY(-1px);
+}
+
+#answerModalQuestion {
+  color: var(--text-100) !important;
+  font-weight: 600; /* Opcional: que se vea más destacado */
+}
+
+/* Asegurar que el párrafo dentro del modal también sea blanco */
+.modal-body p#answerModalQuestion {
+  color: var(--text-100) !important;
+  font-weight: 600;
+}
+
+/* Sobrescribir cualquier clase de Bootstrap que pueda interferir */
+#answerModalQuestion.text-muted,
+.modal-body #answerModalQuestion {
+  color: var(--text-100) !important;
+}
